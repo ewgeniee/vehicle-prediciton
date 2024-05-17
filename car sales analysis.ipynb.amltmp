@@ -75,7 +75,7 @@
       "source": [
         "# Load the data\n",
         "\n",
-        "data = pd.read_csv(\"azureml://subscriptions/8c3497bd-3bf6-40f8-a77a-dd5cbab396ee/resourcegroups/ml-projects2/workspaces/car-sales-analysis/datastores/workspaceblobstore/paths/UI/2024-05-13_093323_UTC/used_cars_data.csv\")"
+        "data = pd.read_csv(\"/content/drive/MyDrive/Big Data/Capstone/sample_data_100k.csv")"
       ],
       "outputs": [
         {
