@@ -9,7 +9,7 @@ def load_label_encoders():
     
     label_encoders = {}
     
-    for col in ["engine_type", "make_name", "model_name", "body_type", "fuel_type", "transmission", "wheel_system_display"]:
+    for col in ["make_name", "model_name", "body_type", "fuel_type", "transmission", "engine_type", "wheel_system_display"]:
         le = LabelEncoder()
         le.classes_ = np.load(f"label_encoder_{col}.npy", allow_pickle = True)
         label_encoders[col] = le
@@ -20,8 +20,8 @@ min_max_scaler = joblib.load("min_max_scaler.pkl")
 best_model = joblib.load("best_model_xgboost.pkl")
 
 # List of feature names in the correct order as used during training
-feature_names = ["engine_type", "mileage", "year", "horsepower", "model_name", "make_name",
-                 "body_type", "fuel_type", "transmission", "wheel_system_display", "average_fuel_economy"]
+feature_names = ["mileage", "year", "horsepower", "model_name", "make_name",
+                 "body_type", "fuel_type", "transmission", "engine_type", "wheel_system_display", "average_fuel_economy"]
 
 def encode_features(data):
     
@@ -30,8 +30,7 @@ def encode_features(data):
         
     return data
 
-def preprocess_input(engine_type, make_name, model_name, body_type, fuel_type, transmission, 
-                     wheel_system_display, mileage, year, horsepower, city_fuel_economy, highway_fuel_economy):
+def preprocess_input(make_name, model_name, year, mileage, transmission, body_type, fuel_type, horsepower,  city_fuel_economy, highway_fuel_economy, engine_type, wheel_system_display):
     average_fuel_economy = (city_fuel_economy + highway_fuel_economy) / 2
     
     data = pd.DataFrame({
@@ -99,7 +98,7 @@ def main():
     elif fuel_type_usage == "Diesel":
         fuel_cost = 1.03 / 100
     elif fuel_type_usage == "Electro":
-        fuel_cost = 15.45 / 100
+        fuel_cost = 0.1545 / 100
         
     if st.button("Calculate Future Value and Costs"):
         input_data = preprocess_input(engine_type, make_name, model_name, body_type, fuel_type, transmission,
